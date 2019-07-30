@@ -84,21 +84,21 @@ export const setFilter = (action) => (dispatch, getState) => {
         default: { }
     }
 
-    let f = getState().ticketData;
+    let ticketData = getState().ticketData;
     
     serverAPI.getTickets().then((response) => { return response.json() })
     .then((data) => {
         
         data.tickets.sort(sortTickets);
-        let ar = data.tickets.filter((el) => {
-            if (f.chk_all === true) { return true }
-            else if (f.chk_withOutTr === true && el.stops === 0) { return true }
-            else if (f.chk_1tr === true && el.stops === 1) { return true }
-            else if (f.chk_2tr === true && el.stops === 2) { return true }
-            else if (f.chk_3tr === true && el.stops === 3) { return true }
+        let filteredTickets = data.tickets.filter((tiket) => {
+            if (ticketData.chk_all === true) { return true }
+            else if (ticketData.chk_withOutTr === true && tiket.stops === 0) { return true }
+            else if (ticketData.chk_1tr === true && tiket.stops === 1) { return true }
+            else if (ticketData.chk_2tr === true && tiket.stops === 2) { return true }
+            else if (ticketData.chk_3tr === true && tiket.stops === 3) { return true }
             else { return false }
         })
-        dispatch(loadTickets(ar));
+        dispatch(loadTickets(filteredTickets));
     })
 
 }
