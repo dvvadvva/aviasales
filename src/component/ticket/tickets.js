@@ -1,34 +1,11 @@
 import React from 'react'
 import s from './tickets.module.css'
-import ap from '../../aset/img/ArrowPlane.png'
 import logo from '../../aset/img/logo.png';
 import {SET_CHK_ALL, SET_CHK_WITH_OUT_TR, SET_CHK_1TR,SET_CHK_2TR,SET_CHK_3TR} from '../../data/const'
+import Ticket from './oneTicket'
 
-const Ticket = (el, id, curency) => {
-     return <div key={id} className={s.container}>
-        <div className={s.cost}>
-            <div>{el.carrier}</div>
-            <button className={s.btn}>
-                <div>Купить</div>
-                <div>за {(Math.round(100*el.price*curency.kurs)/100)} {curency.curValuta}</div>
-            </button>
-        </div>
-        <div className={s.p1}>
-            <div className={s.time}>{el.departure_time}</div>
-            <span>{el.origin}, {el.origin_name}</span>
-            <div>{el.departure_date}</div>
-        </div>
-        <div className={s.p2}>
-            <div>{el.stops === 0 ? '' : el.stops + ' пересадки'} </div>
-            <img src={ap} alt='' />
-        </div>
-        <div className={s.p3}>
-            <div className={s.time}>{el.arrival_time}</div>
-            <span>{el.destination}, {el.destination_name}</span>
-            <div>{el.arrival_date} </div>
-        </div>
-
-    </div>
+const showOneTiket  = (ticket, indexOfTicket, curency) =>{
+    return <Ticket key={indexOfTicket} ticket={ticket} curency={curency}/>
 }
 
 const ListTickets = (props) => {
@@ -87,7 +64,7 @@ const ListTickets = (props) => {
         </div>
         
         <div className={s.tickets}>
-            {props.ticketsData.listTickets.map((el) => (Ticket(el, props.ticketsData.listTickets.indexOf(el), curency())))}
+            {props.ticketsData.listTickets.map((ticket) => (showOneTiket(ticket, props.ticketsData.listTickets.indexOf(ticket), curency())))}
         </div>
     </div>
 }
