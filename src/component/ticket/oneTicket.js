@@ -10,7 +10,7 @@ class Ticket extends Component {
                     <div>{this.props.ticket.carrier}</div>
                     <button className={s.btn}>
                         <div>Купить</div>
-                        <div>за {(Math.round(100 * this.props.ticket.price * this.props.curency.kurs) / 100)} {this.props.curency.curValuta}</div>
+                        <div>за {this.props.cost} {this.props.curency.curValuta}</div>
                     </button>
                 </div>
                 <div className={s.p1}>

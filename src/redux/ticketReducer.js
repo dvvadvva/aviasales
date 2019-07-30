@@ -99,8 +99,6 @@ export const setFilter = (action) => (dispatch, getState) => {
             else { return false }
         })
         dispatch(loadTickets(ar));
-
-
     })
 
 }

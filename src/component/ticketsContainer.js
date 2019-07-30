@@ -1,12 +1,11 @@
-import ListTickets from './tickets.js'
+import ListTickets from './tickets'
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { changeCurrency, getTickets, setFilter } from '../../redux/ticketReducer';
+import { changeCurrency, getTickets, setFilter } from '../redux/ticketReducer';
 
 class TicketsContainerAPI extends Component {
     constructor(props){
         super(props);
-        console.log(this);
         this.changeCurrency     = this.props.changeCurrency.bind(this);
         this.setFilter          = this.props.setFilter.bind(this);
     }
