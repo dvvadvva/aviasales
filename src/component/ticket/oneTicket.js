@@ -4,6 +4,8 @@ import ap from '../../aset/img/ArrowPlane.png'
 
 class Ticket extends Component {
     render() {
+        //console.log(this.props.ticket);
+        //console.log(this.props.ticket.carrier);        
         return (
             <div className={s.container}>
                 <div className={s.cost}>

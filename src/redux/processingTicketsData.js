@@ -1,5 +1,5 @@
 import { SET_CHK_ALL, SET_CHK_WITH_OUT_TR, SET_CHK_1TR, SET_CHK_2TR, SET_CHK_3TR } from '../data/const'
-import { setChkAll, setChkWithOutTr, setChk1Tr, setChk2Tr, setChk3Tr, loadTickets } from './dataAction'
+import { setChkAll, setChkWithOutTr, setChk1Tr, setChk2Tr, setChk3Tr, clearTicketsArray, addTicketsToArray } from './dataAction'
 import serverAPI from '../api/dataAPI'
 
 export const sortTickets = (tiketsCurrent, ticketsNext) => {
@@ -31,26 +31,56 @@ export const setFilter = (action) => (dispatch, getState) => {
         }
         default: { }
     }
-
     getTicketsAndAplyFilter(getState().ticketData, dispatch);
 }
 
-export const loadTicketsAndAplyFilter = () => (dispatch, getState) => {getTicketsAndAplyFilter(getState().ticketData, dispatch);}
+export const loadTicketsAndAplyFilter = () => (dispatch, getState) => { getTicketsAndAplyFilter(getState().ticketData, dispatch); }
 
 const getTicketsAndAplyFilter = (ticketData, dispatch) => {
-    serverAPI.getTickets()
-        .then((response) => { return response.json() })
-        .then((data) => {
-            data.tickets.sort(sortTickets);
-            let filteredTickets = data.tickets.filter((tiket) => {
-                if (ticketData.chk_all === true) { return true }
-                else if (ticketData.chk_withOutTr === true && tiket.stops === 0) { return true }
-                else if (ticketData.chk_1tr === true && tiket.stops === 1) { return true }
-                else if (ticketData.chk_2tr === true && tiket.stops === 2) { return true }
-                else if (ticketData.chk_3tr === true && tiket.stops === 3) { return true }
-                else { return false }
-            });
-            dispatch(loadTickets(filteredTickets));
+    dispatch(clearTicketsArray());
+    serverAPI.getSearchId()
+        .then((response) => { reciveStreamTickets(response.data.searchId, dispatch) })
+}
 
-        })
+const reciveStreamTickets = (searchId, dispatch) => {
+    serverAPI.getTiketsApiV2(searchId).then(
+        (respons) => {
+            if (respons.data === 'Server error') {
+                reciveStreamTickets(searchId, dispatch)
+            } if (respons.data.stop === false) {
+                dispatch(
+                    addTicketsToArray(
+                        ApplyFilterToArray(
+                            convertDataFromApiv2(respons.data.tickets))));
+                //reciveStreamTickets(searchId, dispatch)
+            } if (respons.data.stop === true) {
+                dispatch(
+                    addTicketsToArray(
+                        ApplyFilterToArray(
+                            convertDataFromApiv2(respons.data.tickets))));
+            }
+        }
+    )
+}
+const ApplyFilterToArray    = (tickets) =>{
+    let filteredTickets = tickets.filter((ticket)=>{
+        
+        return true
+    })
+    return filteredTickets
+}
+
+const convertDataFromApiv2 = (rawData) => {
+    let correctlyData = rawData.map((ticket) => {
+        let ticketTo    = ticket.segments[0];
+        console.log(ticketTo);
+        
+        return ({ price: ticket.price, 
+            carrier: ticket.carrier, 
+            origin: ticketTo.origin,
+            destination: ticketTo.destination,
+            stops: 2,
+            departure_time: '11' })
+    })
+    return correctlyData
 }

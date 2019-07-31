@@ -1,4 +1,4 @@
-import { CHG_VALUTA, LOAD_TICKETS, SET_CHK_ALL, SET_CHK_WITH_OUT_TR, SET_CHK_1TR, SET_CHK_2TR, SET_CHK_3TR } from '../data/const'
+import { CHG_VALUTA, LOAD_TICKETS, SET_CHK_ALL, SET_CHK_WITH_OUT_TR, SET_CHK_1TR, SET_CHK_2TR, SET_CHK_3TR, CLEAR_TICKETS, ADD_TICKETS, SORT_BY_LOW_COST, SORT_BY_FASTEN,  SET_DIRECTION_SORT} from '../data/const'
 
 const initialState = {
     curValuta: 1,
@@ -9,11 +9,22 @@ const initialState = {
     chk_3tr: false,
     rub_2_usd: 60,
     rub_2_eur: 70,
+    sortType: SORT_BY_LOW_COST,
     listTickets: []
 }
 
 const ticketReducer = (state = initialState, action) => {
+    //console.log(action);
     switch (action.type) {
+        case SET_DIRECTION_SORT: {
+            return { ...state, sortType: (state.sortType===SORT_BY_LOW_COST ? SORT_BY_FASTEN : SORT_BY_LOW_COST)}
+        }
+        case CLEAR_TICKETS: {
+            return { ...state, listTickets: []}
+        }
+        case ADD_TICKETS: {
+            return { ...state, listTickets: state.listTickets.concat(action.tickets)}
+        }
         case LOAD_TICKETS: {
             return { ...state, listTickets: action.tikets }
         }
