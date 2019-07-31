@@ -23,11 +23,11 @@ class Filter extends Component {
                     <button onClick={this.press_eur} className={this.props.curValuta === 3 ? s.btn_selected : ''}>EUR</button>
                 </div>
                 <div className={s.peresad}>
-                    <div><input type='checkbox' checked={this.props.ticketsData.chk_all} onChange={this.setChkAll} /><label>Все</label></div>
-                    <div><input type='checkbox' checked={this.props.ticketsData.chk_withOutTr} onChange={this.setChkWithOutTr} /><label>Без пересадки</label></div>
-                    <div><input type='checkbox' checked={this.props.ticketsData.chk_1tr} onChange={this.setChk1Tr} /><label>1 пересадки</label></div>
-                    <div><input type='checkbox' checked={this.props.ticketsData.chk_2tr} onChange={this.setChk2Tr} /><label>2 пересадки</label></div>
-                    <div><input type='checkbox' checked={this.props.ticketsData.chk_3tr} onChange={this.setChk3Tr} /><label>3 пересадки</label></div>
+                    <div><input type='checkbox' checked={this.props.condition.chk_all} onChange={this.setChkAll} /><label>Все</label></div>
+                    <div><input type='checkbox' checked={this.props.condition.chk_withOutTr} onChange={this.setChkWithOutTr} /><label>Без пересадки</label></div>
+                    <div><input type='checkbox' checked={this.props.condition.chk_1tr} onChange={this.setChk1Tr} /><label>1 пересадки</label></div>
+                    <div><input type='checkbox' checked={this.props.condition.chk_2tr} onChange={this.setChk2Tr} /><label>2 пересадки</label></div>
+                    <div><input type='checkbox' checked={this.props.condition.chk_3tr} onChange={this.setChk3Tr} /><label>3 пересадки</label></div>
                 </div>
 
             </div>

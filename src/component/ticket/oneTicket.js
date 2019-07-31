@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import s from './oneTicket.module.css'
-import ap from '../../aset/img/ArrowPlane.png'
+//import ap from '../../aset/img/ArrowPlane.png'
 
 class Ticket extends Component {
     render() {

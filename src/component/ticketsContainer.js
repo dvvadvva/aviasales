@@ -33,6 +33,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-let TicketsContainer = connect(mapStateToProps, { changeSortDirection, changeCurrency, loadTicketsAndAplyFilter, setFilter,  })(TicketsContainerAPI);
+let TicketsContainer = connect(mapStateToProps, { changeSortDirection, changeCurrency, loadTicketsAndAplyFilter, setFilter})(TicketsContainerAPI);
 
 export default TicketsContainer;

@@ -7,6 +7,12 @@ export const sortTickets = (tiketsCurrent, ticketsNext) => {
     else { return -1 }
 }
 
+export const sortTicketsByDuration = (tiketsCurrent, ticketsNext) => {
+    //console.log(tiketsCurrent.segments[0].duration+tiketsCurrent.segments[1].duration);
+    if ((tiketsCurrent.segments[0].duration+tiketsCurrent.segments[1].duration) > (ticketsNext.segments[0].duration+ticketsNext.segments[1].duration)) { return 1 }
+    else { return -1 }
+}
+
 export const setFilter = (action) => (dispatch, getState) => {
     switch (action) {
         case SET_CHK_ALL: {
@@ -39,60 +45,60 @@ export const loadTicketsAndAplyFilter = () => (dispatch, getState) => { getTicke
 const getTicketsAndAplyFilter = (ticketData, dispatch) => {
     dispatch(clearTicketsArray());
     serverAPI.getSearchId()
-        .then((response) => { reciveStreamTickets(response.data.searchId, dispatch) })
+        .then((response) => { reciveStreamTickets(response.data.searchId, dispatch, ticketData.condition) })
 }
 
-const reciveStreamTickets = (searchId, dispatch) => {
+const reciveStreamTickets = (searchId, dispatch, condition) => {
     serverAPI.getTiketsApiV2(searchId).then(
         (respons) => {
             if (respons.data === 'Server error') {
-                reciveStreamTickets(searchId, dispatch)
+                reciveStreamTickets(searchId, dispatch, condition)
             } if (respons.data.stop === false) {
                 dispatch(
                     addTicketsToArray(
                         ApplyFilterToArray(
-                            convertDataFromApiv2(respons.data.tickets))));
-                //reciveStreamTickets(searchId, dispatch)
+                            convertDataFromApiv2(respons.data.tickets), condition)));
+                //reciveStreamTickets(searchId, dispatch, condition)
             } if (respons.data.stop === true) {
                 dispatch(
                     addTicketsToArray(
                         ApplyFilterToArray(
-                            convertDataFromApiv2(respons.data.tickets))));
+                            convertDataFromApiv2(respons.data.tickets), condition)));
             }
         }
     )
 }
-const ApplyFilterToArray = (tickets) => {
-    let filteredTickets = tickets.filter((ticket) => {
 
-        return true
+const ApplyFilterToArray = (tickets, condition) => {
+    let filteredTickets = tickets.filter((ticket) => {
+        if (condition.chk_all===true){
+            return true
+        }else if(condition.chk_withOutTr===true && ticket.CountStopsTo===0 && ticket.CountStopsBack===0){
+            return true
+        }else if(condition.chk_1tr===true && ticket.CountStopsTo===1 && ticket.CountStopsBack===1){
+            return true
+        }else if(condition.chk_2tr===true && ticket.CountStopsTo===2 && ticket.CountStopsBack===2){
+            return true
+        }else if(condition.chk_3tr===true && ticket.CountStopsTo===3 && ticket.CountStopsBack===3){
+            return true
+        }
+        return false
     })
     return filteredTickets
 }
 
 const convertDataFromApiv2 = (rawData) => {
     let correctlyData = rawData.map((ticket) => {
-        //let ticketTo    = ticket.segments[0];
         let newSegment = [...ticket.segments.map((oneSegment) => {
             let durationHH  = Math.trunc(oneSegment.duration/60);
             let durationMM  = oneSegment.duration-60*durationHH;
-
             let dd  = new Date(oneSegment.date);
-            //console.log(dd);
-            //console.log('duration='+oneSegment.duration+' hour='+Math.trunc(oneSegment.duration/60)+' min='+(oneSegment.duration-60*Math.trunc(oneSegment.duration/60)));
             let hhmm    = dd.getHours()*60+dd.getMinutes()+oneSegment.duration;
-            //console.log(hhmm);
             let hh2    = Math.trunc(hhmm/60);
-            //console.log(hh2);
             let hh3    = hh2-24*Math.trunc(hh2/24);
-            //console.log('new hour='+hh3);
             let mm2     = hhmm-hh2*60;
-            //console.log('new minuts='+mm2);
 
-            
-
-
-            let mm  = dd.getHours()+Math.round(oneSegment.duration/60)
+            //let mm  = dd.getHours()+Math.round(oneSegment.duration/60)
             return { ...oneSegment, 
                 timeDeparture: `${dd.getHours()}:${dd.getMinutes()}`, 
                 timeArrival: `${hh3}:${mm2}`,
@@ -100,18 +106,12 @@ const convertDataFromApiv2 = (rawData) => {
                 durationMM: durationMM}
         })];
 
-        console.log(ticket);
-
         return ({
             price: ticket.price,
             carrier: ticket.carrier,
             segments: [...newSegment],
             CountStopsTo: ticket.segments[0].stops.length,
-            durationTo: ticket.segments[0].duration,
             CountStopsBack: ticket.segments[1].stops.length,
-            durationBack: ticket.segments[1].duration,
-
-            departure_time: '11'
         })
     })
     return correctlyData

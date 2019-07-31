@@ -41,7 +41,7 @@ class ListTickets extends Component{
             <img src={logo} alt="logo" />
         </div>
         <div className={s.filter}>
-            <Filter ticketsData={this.props.ticketsData} curValuta={this.props.curValuta} changeCurrency={this.props.changeCurrency} setFilter={this.props.setFilter}/>
+            <Filter condition={this.props.ticketsData.condition} curValuta={this.props.curValuta} changeCurrency={this.props.changeCurrency} setFilter={this.props.setFilter}/>
         </div>
         <div>
             <Sort changeSortDirection={this.props.changeSortDirection} sortType={this.props.ticketsData.sortType}/>
