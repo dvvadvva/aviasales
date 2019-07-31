@@ -7,7 +7,7 @@ import Sort from './sort/sort'
 
 const showOneTiket = (ticket, indexOfTicket, curency) => {
     let cost = Math.round(100 * ticket.price * curency.kurs) / 100;
-    return <Ticket key={indexOfTicket} ticket={ticket} curency={curency} cost={cost}/>
+    return <Ticket key={indexOfTicket} ticket={ticket} segmentTo={ticket.segments[0]} segmentBack={ticket.segments[1]} curency={curency} cost={cost}/>
 }
 
 class ListTickets extends Component{
@@ -34,8 +34,8 @@ class ListTickets extends Component{
     }
 
     render(){
-        console.log(11);
-        console.log(this.props.ticketsData.sortType);
+        //console.log(11);
+        //console.log(this.props.ticketsData.sortType);
     return <div className={s.App}>
         <div className={s.header}>
             <img src={logo} alt="logo" />

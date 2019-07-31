@@ -11,6 +11,12 @@
 .p1{
     grid-area: p1;
 }
+.allticket{
+    border: 5px;
+    border-color: #ff6d00;
+    outline: 5px;
+    margin: 30px;
+}
 
 .p2{
     grid-area: p2;
@@ -22,10 +28,9 @@
 
 .container{
     display: grid;
-    grid-template-columns: 200px 150px 150px 150px;
-    grid-template-rows: 2fr;
-    grid-template-areas: 'c p1 p2 p3';
-    grid-row-gap: 250px;
+    grid-template-columns: 200px 200px 200px;
+    grid-template-rows: 6;
+    grid-template-areas: 'p1 p2 p3 ' 'p4 p5 p6' 'p7 p8 p9' 'p10 p11 p12' 'p13 p14 p15' ;
 }
 
 .peresad {

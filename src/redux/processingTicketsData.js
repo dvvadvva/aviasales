@@ -62,9 +62,9 @@ const reciveStreamTickets = (searchId, dispatch) => {
         }
     )
 }
-const ApplyFilterToArray    = (tickets) =>{
-    let filteredTickets = tickets.filter((ticket)=>{
-        
+const ApplyFilterToArray = (tickets) => {
+    let filteredTickets = tickets.filter((ticket) => {
+
         return true
     })
     return filteredTickets
@@ -72,15 +72,47 @@ const ApplyFilterToArray    = (tickets) =>{
 
 const convertDataFromApiv2 = (rawData) => {
     let correctlyData = rawData.map((ticket) => {
-        let ticketTo    = ticket.segments[0];
-        console.log(ticketTo);
-        
-        return ({ price: ticket.price, 
-            carrier: ticket.carrier, 
-            origin: ticketTo.origin,
-            destination: ticketTo.destination,
-            stops: 2,
-            departure_time: '11' })
+        //let ticketTo    = ticket.segments[0];
+        let newSegment = [...ticket.segments.map((oneSegment) => {
+            let durationHH  = Math.trunc(oneSegment.duration/60);
+            let durationMM  = oneSegment.duration-60*durationHH;
+
+            let dd  = new Date(oneSegment.date);
+            //console.log(dd);
+            //console.log('duration='+oneSegment.duration+' hour='+Math.trunc(oneSegment.duration/60)+' min='+(oneSegment.duration-60*Math.trunc(oneSegment.duration/60)));
+            let hhmm    = dd.getHours()*60+dd.getMinutes()+oneSegment.duration;
+            //console.log(hhmm);
+            let hh2    = Math.trunc(hhmm/60);
+            //console.log(hh2);
+            let hh3    = hh2-24*Math.trunc(hh2/24);
+            //console.log('new hour='+hh3);
+            let mm2     = hhmm-hh2*60;
+            //console.log('new minuts='+mm2);
+
+            
+
+
+            let mm  = dd.getHours()+Math.round(oneSegment.duration/60)
+            return { ...oneSegment, 
+                timeDeparture: `${dd.getHours()}:${dd.getMinutes()}`, 
+                timeArrival: `${hh3}:${mm2}`,
+                durationHH: durationHH,
+                durationMM: durationMM}
+        })];
+
+        console.log(ticket);
+
+        return ({
+            price: ticket.price,
+            carrier: ticket.carrier,
+            segments: [...newSegment],
+            CountStopsTo: ticket.segments[0].stops.length,
+            durationTo: ticket.segments[0].duration,
+            CountStopsBack: ticket.segments[1].stops.length,
+            durationBack: ticket.segments[1].duration,
+
+            departure_time: '11'
+        })
     })
     return correctlyData
 }
