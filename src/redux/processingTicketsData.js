@@ -8,7 +8,6 @@ export const sortTickets = (tiketsCurrent, ticketsNext) => {
 }
 
 export const sortTicketsByDuration = (tiketsCurrent, ticketsNext) => {
-    //console.log(tiketsCurrent.segments[0].duration+tiketsCurrent.segments[1].duration);
     if ((tiketsCurrent.segments[0].duration+tiketsCurrent.segments[1].duration) > (ticketsNext.segments[0].duration+ticketsNext.segments[1].duration)) { return 1 }
     else { return -1 }
 }
