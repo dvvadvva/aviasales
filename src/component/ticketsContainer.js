@@ -1,7 +1,8 @@
 import ListTickets from './tickets'
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { changeCurrency, getTickets, setFilter } from '../redux/ticketReducer';
+import { changeCurrency } from '../redux/dataAction';
+import { setFilter, loadTicketsAndAplyFilter} from '../redux/processingTicketsData'
 
 class TicketsContainerAPI extends Component {
     constructor(props){
@@ -14,9 +15,7 @@ class TicketsContainerAPI extends Component {
     
     setFilter(){}
 
-    componentDidMount() {
-        this.props.getTickets();
-    }
+    componentDidMount() {this.props.loadTicketsAndAplyFilter()}
 
     render() {
         return (<ListTickets ticketsData={this.props.TicketsData}
@@ -33,6 +32,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-let TicketsContainer = connect(mapStateToProps, { changeCurrency, getTickets, setFilter })(TicketsContainerAPI);
+let TicketsContainer = connect(mapStateToProps, { changeCurrency, loadTicketsAndAplyFilter, setFilter })(TicketsContainerAPI);
 
 export default TicketsContainer;

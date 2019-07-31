@@ -1,5 +1,4 @@
 import { CHG_VALUTA, LOAD_TICKETS, SET_CHK_ALL, SET_CHK_WITH_OUT_TR, SET_CHK_1TR, SET_CHK_2TR, SET_CHK_3TR } from '../data/const'
-import serverAPI from '../api/dataAPI'
 
 const initialState = {
     curValuta: 1,
@@ -45,70 +44,5 @@ const ticketReducer = (state = initialState, action) => {
         default: { return state }
     }
 }
-
-const sortTickets = (tik1, tik2) => {
-    if (tik1.price > tik2.price) { return 1 }
-    else { return -1 }
-}
-
-export const getTickets = () => (dispatch) => {
-    serverAPI.getTickets().then((response) => { return response.json() })
-        .then((data) => {
-            data.tickets.sort(sortTickets);
-            dispatch(loadTickets(data.tickets));
-        })
-}
-
-export const setFilter = (action) => (dispatch, getState) => {
-    switch (action) {
-        case SET_CHK_ALL: {
-            dispatch(setChkAll());
-            break
-        }
-        case SET_CHK_WITH_OUT_TR: {
-            dispatch(setChkWithOutTr());
-            break
-        }
-        case SET_CHK_1TR: {
-            dispatch(setChk1Tr());
-            break
-        }
-        case SET_CHK_2TR: {
-            dispatch(setChk2Tr());
-            break
-        }
-        case SET_CHK_3TR: {
-            dispatch(setChk3Tr());
-            break
-        }
-        default: { }
-    }
-
-    let ticketData = getState().ticketData;
-    
-    serverAPI.getTickets().then((response) => { return response.json() })
-    .then((data) => {
-        
-        data.tickets.sort(sortTickets);
-        let filteredTickets = data.tickets.filter((tiket) => {
-            if (ticketData.chk_all === true) { return true }
-            else if (ticketData.chk_withOutTr === true && tiket.stops === 0) { return true }
-            else if (ticketData.chk_1tr === true && tiket.stops === 1) { return true }
-            else if (ticketData.chk_2tr === true && tiket.stops === 2) { return true }
-            else if (ticketData.chk_3tr === true && tiket.stops === 3) { return true }
-            else { return false }
-        })
-        dispatch(loadTickets(filteredTickets));
-    })
-
-}
-
-export const changeCurrency = (num) => ({ type: CHG_VALUTA, num: num })
-export const setChkAll = () => ({ type: SET_CHK_ALL })
-export const setChkWithOutTr = () => ({ type: SET_CHK_WITH_OUT_TR })
-export const setChk1Tr = () => ({ type: SET_CHK_1TR })
-export const setChk2Tr = () => ({ type: SET_CHK_2TR })
-export const setChk3Tr = () => ({ type: SET_CHK_3TR })
-export const loadTickets = (tikets) => ({ type: LOAD_TICKETS, tikets: tikets })
 
 export default ticketReducer
