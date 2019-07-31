@@ -34,8 +34,6 @@ class ListTickets extends Component{
     }
 
     render(){
-        //console.log(11);
-        //console.log(this.props.ticketsData.sortType);
     return <div className={s.App}>
         <div className={s.header}>
             <img src={logo} alt="logo" />

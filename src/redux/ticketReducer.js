@@ -17,8 +17,6 @@ const initialState = {
 }
 
 const ticketReducer = (state = initialState, action) => {
-    //let stCopy  = { ...state, conditon: {...state.condition, chk_all: false}, chk_withOutTr: (!state.chk_withOutTr) };
-    //console.log(stCopy);
     switch (action.type) {
         case SET_DIRECTION_SORT: {
             let stateCopy;

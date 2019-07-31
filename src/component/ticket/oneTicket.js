@@ -4,8 +4,6 @@ import s from './oneTicket.module.css'
 
 class Ticket extends Component {
     render() {
-        //console.log(this.props.ticket);
-        //console.log(this.props.ticket.carrier);        
         return (
             <div className={s.allticket}>
             <div className={s.container}>
