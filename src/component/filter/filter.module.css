@@ -5,3 +5,11 @@
 .peresad {
     text-align: left
 }
+.filter{
+    border: 2px solid;
+    border-color: #ff6d00;
+    border-radius: 5pt;
+    //margin: 15px;
+    background-color: azure;
+
+}

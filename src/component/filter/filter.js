@@ -15,7 +15,7 @@ class Filter extends Component {
 
     render() {
         return (
-            <div>
+            <div className={s.filter}>
                 <div>Валюта</div>
                 <div>
                     <button onClick={this.press_rub} className={this.props.curValuta === 1 ? s.btn_selected : ''}>RUB</button>

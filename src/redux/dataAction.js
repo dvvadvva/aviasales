@@ -9,5 +9,5 @@ export const setChk3Tr = () => ({ type: SET_CHK_3TR })
 export const loadTickets = (tikets) => ({ type: LOAD_TICKETS, tikets: tikets })
 export const clearTicketsArray = () => ({ type: CLEAR_TICKETS })
 export const addTicketsToArray = (tickets) => ({ type: ADD_TICKETS, tickets: tickets })
-export const changeSortDirection = () =>({type: SET_DIRECTION_SORT})
+export const changeSortDirection = (direction) =>({type: SET_DIRECTION_SORT, direction: direction})
 

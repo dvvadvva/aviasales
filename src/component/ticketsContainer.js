@@ -1,4 +1,4 @@
-import ListTickets from './tickets'
+import ListTickets from './ListTickets'
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { changeCurrency, changeSortDirection } from '../redux/dataAction';
@@ -9,11 +9,12 @@ class TicketsContainerAPI extends Component {
         super(props);
         this.changeCurrency     = this.props.changeCurrency.bind(this);
         this.setFilter          = this.props.setFilter.bind(this);
+        this.changeSortDirection= this.props.changeSortDirection.bind(this)
     }
 
-    changeCurrency(){}
-    
+    changeCurrency(){}    
     setFilter(){}
+    changeSortDirection(){}
 
     componentDidMount() {this.props.loadTicketsAndAplyFilter()}
 
@@ -21,7 +22,7 @@ class TicketsContainerAPI extends Component {
         return (<ListTickets ticketsData={this.props.TicketsData}
             curValuta={this.props.TicketsData.curValuta}
             changeCurrency={this.changeCurrency}
-            changeSortDirection={this.props.changeSortDirection}
+            changeSortDirection={this.changeSortDirection}
             setFilter={this.setFilter}
         />)
     }

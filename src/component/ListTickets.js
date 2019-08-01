@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import s from './tickets.module.css'
+import s from './ListTickets.module.css'
 import logo from '../aset/img/logo.png';
 import Ticket from './ticket/oneTicket'
 import Filter from './filter/filter'
-import Sort from './sort/sort'
+import SortTickets from './sort/sort'
 
 const showOneTiket = (ticket, indexOfTicket, curency) => {
     let cost = Math.round(100 * ticket.price * curency.kurs) / 100;
@@ -42,7 +42,7 @@ class ListTickets extends Component{
             <Filter condition={this.props.ticketsData.condition} curValuta={this.props.curValuta} changeCurrency={this.props.changeCurrency} setFilter={this.props.setFilter}/>
         </div>
         <div>
-            <Sort changeSortDirection={this.props.changeSortDirection} sortType={this.props.ticketsData.sortType}/>
+            <SortTickets changeSortDirection={this.props.changeSortDirection} sortType={this.props.ticketsData.sortType}/>
         </div>
         <div className={s.tickets}>
             {this.props.ticketsData.listTickets.map((ticket) => (showOneTiket(ticket, this.props.ticketsData.listTickets.indexOf(ticket), this.curency())))}

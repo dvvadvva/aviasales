@@ -1,4 +1,4 @@
-import { CHG_VALUTA, LOAD_TICKETS, SET_CHK_ALL, SET_CHK_WITH_OUT_TR, SET_CHK_1TR, SET_CHK_2TR, SET_CHK_3TR, CLEAR_TICKETS, ADD_TICKETS, SORT_BY_LOW_COST, SORT_BY_FASTEN, SET_DIRECTION_SORT } from '../data/const'
+import { CHG_VALUTA, LOAD_TICKETS, SET_CHK_ALL, SET_CHK_WITH_OUT_TR, SET_CHK_1TR, SET_CHK_2TR, SET_CHK_3TR, CLEAR_TICKETS, ADD_TICKETS, SORT_BY_LOW_COST, SET_DIRECTION_SORT } from '../data/const'
 import { sortTickets, sortTicketsByDuration } from './processingTicketsData'
 
 const initialState = {
@@ -17,23 +17,13 @@ const initialState = {
 }
 
 const ticketReducer = (state = initialState, action) => {
+    console.log(action);
     switch (action.type) {
         case SET_DIRECTION_SORT: {
-            let stateCopy;
-            if (state.sortType === SORT_BY_LOW_COST) {
-                stateCopy = {
-                    ...state,
-                    listTickets: state.listTickets.sort(sortTicketsByDuration),
-                    sortType: (state.sortType === SORT_BY_LOW_COST ? SORT_BY_FASTEN : SORT_BY_LOW_COST)
-                }
-            } else {
-                stateCopy = {
-                    ...state,
-                    listTickets: state.listTickets.sort(sortTickets),
-                    sortType: (state.sortType === SORT_BY_LOW_COST ? SORT_BY_FASTEN : SORT_BY_LOW_COST)
-                }
-            }
-            return stateCopy
+            return {
+                ...state,
+                listTickets: state.listTickets.sort(sortTicketsByDuration),
+                sortType: action.direction}
         }
         case CLEAR_TICKETS: {
             return { ...state, listTickets: [] }
