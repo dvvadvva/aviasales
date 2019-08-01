@@ -3,15 +3,17 @@ import s from './sort.module.css'
 import {SORT_BY_FASTEN, SORT_BY_LOW_COST} from '../../data/const'
 
 class SortTickets extends Component {
-    
+    constructor(props){
+        super(props);
+        this.ChoiseSortByCost    = this.ChoiseSortByCost.bind(this);
+        this.ChoiseSortByDuration    = this.ChoiseSortByDuration.bind(this);
+    }
     ChoiseSortByCost(){
-        console.log(this);
-        //this.props.changeSortDirection(SORT_BY_LOW_COST);        
+        this.props.changeSortDirection(SORT_BY_LOW_COST);        
     }
 
     ChoiseSortByDuration(){
-        //console.log(this.props);
-        //this.props.changeSortDirection(SORT_BY_FASTEN);
+        this.props.changeSortDirection(SORT_BY_FASTEN);
     }
     
     render(){

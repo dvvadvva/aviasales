@@ -97,7 +97,6 @@ const convertDataFromApiv2 = (rawData) => {
             let hh3    = hh2-24*Math.trunc(hh2/24);
             let mm2     = hhmm-hh2*60;
 
-            //let mm  = dd.getHours()+Math.round(oneSegment.duration/60)
             return { ...oneSegment, 
                 timeDeparture: `${dd.getHours()}:${dd.getMinutes()}`, 
                 timeArrival: `${hh3}:${mm2}`,
@@ -105,10 +104,21 @@ const convertDataFromApiv2 = (rawData) => {
                 durationMM: durationMM}
         })];
 
+        let listPeresadTo='';
+        newSegment[0].stops.forEach(element => {
+            listPeresadTo=listPeresadTo+(listPeresadTo.length===0? '': ', ')+element;
+        });
+        let listPeresadBack='';
+        newSegment[1].stops.forEach(element => {
+            listPeresadBack=listPeresadBack+(listPeresadBack.length===0? '': ', ')+element;
+        });
+
         return ({
             price: ticket.price,
             carrier: ticket.carrier,
             segments: [...newSegment],
+            listPeresadTo: listPeresadTo,
+            listPeresadBack: listPeresadBack,
             CountStopsTo: ticket.segments[0].stops.length,
             CountStopsBack: ticket.segments[1].stops.length,
         })

@@ -1,7 +1,11 @@
 .btn_selected{
-    background: #2196f3
+    background: #2196f3;
+    width: 250px;
+    height: 30px;
 }
 
 .btn{
-    background: white
+    background: white;
+    width: 250px;    
+    height: 30px;
 }

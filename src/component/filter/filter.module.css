@@ -7,9 +7,8 @@
 }
 .filter{
     border: 2px solid;
-    border-color: #ff6d00;
+    border-color: white;
     border-radius: 5pt;
-    //margin: 15px;
-    background-color: azure;
+    background-color: white;
 
 }
