@@ -1,16 +1,14 @@
 .cost{
-    grid-area: c;
-    align-items: center;
-    align-self: center;
-    background: white;
-    border: 2px solid #333;
-    border-color: white;
-    border-radius: 5px;
+    color: #2196f3;
+    font-size: large;
+    font-weight: bold;
+    
 }
 
-.p1{
-    grid-area: p1;
+.bledno{
+    color: darkgray;   
 }
+
 .allticket{
     border: 2px solid;
     border-color: white;
@@ -19,21 +17,14 @@
     background-color: white;
 }
 
-.p2{
-    grid-area: p2;
-}
-
-.p3{
-    grid-area: p3;
-}
-
 .container{
     display: grid;
-    grid-template-columns: 200px 200px 200px;
-    grid-template-rows: 6;
-    grid-template-areas: 'p1 p2 p3 ' 'p4 p5 p6' 'p7 p8 p9' 'p10 p11 p12' 'p13 p14 p15' ;
+    grid-template-columns: 1fr 1fr 1fr;
+    /*grid-template-rows: 6;
+    grid-template-areas: 'p1 p2 p3 ' 'p4 p5 p6' 'p7 p8 p9' 'p10 p11 p12' 'p13 p14 p15' ;*/
 }
 
+/*
 .peresad {
     text-align: left
 }
@@ -46,3 +37,26 @@
 .btn{
     background: #ff6d00;
 }
+*/
+/*
+.p1{
+    grid-area: p1;
+}
+
+.p2{
+    grid-area: p2;
+}
+
+.p3{
+    grid-area: p3;
+}
+*/
+/*.cost{
+    grid-area: c;
+    align-items: center;
+    align-self: center;
+    background: white;
+    border: 2px solid #333;
+    border-color: white;
+    border-radius: 5px;
+}*/
