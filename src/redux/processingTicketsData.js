@@ -1,5 +1,6 @@
 import { SET_CHK_ALL, SET_CHK_WITH_OUT_TR, SET_CHK_1TR, SET_CHK_2TR, SET_CHK_3TR } from '../data/const'
 import { setChkAll, setChkWithOutTr, setChk1Tr, setChk2Tr, setChk3Tr, clearTicketsArray, addTicketsToArray } from './dataAction'
+import { setFetching } from './dataAction'
 import serverAPI from '../api/dataAPI'
 
 export const sortTickets = (tiketsCurrent, ticketsNext) => {
@@ -8,7 +9,7 @@ export const sortTickets = (tiketsCurrent, ticketsNext) => {
 }
 
 export const sortTicketsByDuration = (tiketsCurrent, ticketsNext) => {
-    if ((tiketsCurrent.segments[0].duration+tiketsCurrent.segments[1].duration) > (ticketsNext.segments[0].duration+ticketsNext.segments[1].duration)) { return 1 }
+    if ((tiketsCurrent.segments[0].duration + tiketsCurrent.segments[1].duration) > (ticketsNext.segments[0].duration + ticketsNext.segments[1].duration)) { return 1 }
     else { return -1 }
 }
 
@@ -42,6 +43,7 @@ export const setFilter = (action) => (dispatch, getState) => {
 export const loadTicketsAndAplyFilter = () => (dispatch, getState) => { getTicketsAndAplyFilter(getState().ticketData, dispatch); }
 
 const getTicketsAndAplyFilter = (ticketData, dispatch) => {
+    dispatch(setFetching(true));
     dispatch(clearTicketsArray());
     serverAPI.getSearchId()
         .then((response) => { reciveStreamTickets(response.data.searchId, dispatch, ticketData.condition) })
@@ -58,11 +60,13 @@ const reciveStreamTickets = (searchId, dispatch, condition) => {
                         ApplyFilterToArray(
                             convertDataFromApiv2(respons.data.tickets), condition)));
                 reciveStreamTickets(searchId, dispatch, condition)
+                //dispatch(setFetching(false));
             } if (respons.data.stop === true) {
                 dispatch(
                     addTicketsToArray(
                         ApplyFilterToArray(
                             convertDataFromApiv2(respons.data.tickets), condition)));
+                dispatch(setFetching(false));
             }
         }
     )
@@ -70,15 +74,15 @@ const reciveStreamTickets = (searchId, dispatch, condition) => {
 
 const ApplyFilterToArray = (tickets, condition) => {
     let filteredTickets = tickets.filter((ticket) => {
-        if (condition.chk_all===true){
+        if (condition.chk_all === true) {
             return true
-        }else if(condition.chk_withOutTr===true && ticket.CountStopsTo===0 && ticket.CountStopsBack===0){
+        } else if (condition.chk_withOutTr === true && ticket.CountStopsTo === 0 && ticket.CountStopsBack === 0) {
             return true
-        }else if(condition.chk_1tr===true && ticket.CountStopsTo===1 && ticket.CountStopsBack===1){
+        } else if (condition.chk_1tr === true && ticket.CountStopsTo === 1 && ticket.CountStopsBack === 1) {
             return true
-        }else if(condition.chk_2tr===true && ticket.CountStopsTo===2 && ticket.CountStopsBack===2){
+        } else if (condition.chk_2tr === true && ticket.CountStopsTo === 2 && ticket.CountStopsBack === 2) {
             return true
-        }else if(condition.chk_3tr===true && ticket.CountStopsTo===3 && ticket.CountStopsBack===3){
+        } else if (condition.chk_3tr === true && ticket.CountStopsTo === 3 && ticket.CountStopsBack === 3) {
             return true
         }
         return false
@@ -89,28 +93,30 @@ const ApplyFilterToArray = (tickets, condition) => {
 const convertDataFromApiv2 = (rawData) => {
     let correctlyData = rawData.map((ticket) => {
         let newSegment = [...ticket.segments.map((oneSegment) => {
-            let durationHH  = Math.trunc(oneSegment.duration/60);
-            let durationMM  = oneSegment.duration-60*durationHH;
-            let dd  = new Date(oneSegment.date);
-            let hhmm    = dd.getHours()*60+dd.getMinutes()+oneSegment.duration;
-            let hh2    = Math.trunc(hhmm/60);
-            let hh3    = hh2-24*Math.trunc(hh2/24);
-            let mm2     = hhmm-hh2*60;
+            let durationHH = Math.trunc(oneSegment.duration / 60);
+            let durationMM = oneSegment.duration - 60 * durationHH;
+            let dd = new Date(oneSegment.date);
+            let hhmm = dd.getHours() * 60 + dd.getMinutes() + oneSegment.duration;
+            let hh2 = Math.trunc(hhmm / 60);
+            let hh3 = hh2 - 24 * Math.trunc(hh2 / 24);
+            let mm2 = hhmm - hh2 * 60;
 
-            return { ...oneSegment, 
-                timeDeparture: `${dd.getHours()}:${dd.getMinutes()}`, 
+            return {
+                ...oneSegment,
+                timeDeparture: `${dd.getHours()}:${dd.getMinutes()}`,
                 timeArrival: `${hh3}:${mm2}`,
                 durationHH: durationHH,
-                durationMM: durationMM}
+                durationMM: durationMM
+            }
         })];
 
-        let listPeresadTo='';
+        let listPeresadTo = '';
         newSegment[0].stops.forEach(element => {
-            listPeresadTo=listPeresadTo+(listPeresadTo.length===0? '': ', ')+element;
+            listPeresadTo = listPeresadTo + (listPeresadTo.length === 0 ? '' : ', ') + element;
         });
-        let listPeresadBack='';
+        let listPeresadBack = '';
         newSegment[1].stops.forEach(element => {
-            listPeresadBack=listPeresadBack+(listPeresadBack.length===0? '': ', ')+element;
+            listPeresadBack = listPeresadBack + (listPeresadBack.length === 0 ? '' : ', ') + element;
         });
 
         return ({

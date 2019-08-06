@@ -1,4 +1,5 @@
 import { CHG_VALUTA, LOAD_TICKETS, SET_CHK_ALL, SET_CHK_WITH_OUT_TR, SET_CHK_1TR, SET_CHK_2TR, SET_CHK_3TR, CLEAR_TICKETS, ADD_TICKETS, SORT_BY_LOW_COST, SET_DIRECTION_SORT } from '../data/const'
+import { SET_FETCHING } from '../data/const'
 import { sortTickets, sortTicketsByDuration } from './processingTicketsData'
 
 const initialState = {
@@ -13,15 +14,19 @@ const initialState = {
     rub_2_usd: 60,
     rub_2_eur: 70,
     sortType: SORT_BY_LOW_COST,
-    listTickets: []
+    listTickets: [],
+    isFetching: false
 }
 
 const ticketReducer = (state = initialState, action) => {
     switch (action.type) {
+        case SET_FETCHING:{
+            return {...state, isFetching: action.isFetching}
+        }
         case SET_DIRECTION_SORT: {
             return {
                 ...state,
-                listTickets: state.listTickets.sort(sortTicketsByDuration),
+                listTickets: state.listTickets.sort((action.direction===SORT_BY_LOW_COST ? sortTickets : sortTicketsByDuration)),
                 sortType: action.direction}
         }
         case CLEAR_TICKETS: {

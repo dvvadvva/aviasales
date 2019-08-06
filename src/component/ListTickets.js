@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import s from './ListTickets.module.css'
 import logo from '../aset/img/logo.png';
+import loading from '../aset/img/loading.gif';
 import Ticket from './ticket/oneTicket'
 import Filter from './filter/filter'
 import SortTickets from './sort/sort'
@@ -37,6 +38,7 @@ class ListTickets extends Component{
     return <div className={s.App}>
         <div className={s.header}>
             <img src={logo} alt="logo" />
+            {(this.props.ticketsData.isFetching ? <img src={loading} alt="is load data" /> : null)}
         </div>
         <div className={s.filter}>
             <Filter condition={this.props.ticketsData.condition} curValuta={this.props.curValuta} changeCurrency={this.props.changeCurrency} setFilter={this.props.setFilter}/>
