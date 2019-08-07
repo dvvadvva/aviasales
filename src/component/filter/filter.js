@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import s from './filter.module.css'
-import { SET_CHK_ALL, SET_CHK_WITH_OUT_TR, SET_CHK_1TR, SET_CHK_2TR, SET_CHK_3TR } from '../../data/const'
+import { SET_CHK_ALL, SET_CHK_WITH_OUT_TR, SET_CHK_1TR, SET_CHK_2TR, SET_CHK_3TR } from '../../redux/const'
 
 class Filter extends Component {
 
@@ -14,22 +14,32 @@ class Filter extends Component {
     setChk3Tr = () => { this.props.setFilter(SET_CHK_3TR) }
 
     render() {
+        let { curValuta, condition } = this.props;
         return (
             <div className={s.filter}>
                 <div>Валюта</div>
                 <div>
-                    <button onClick={this.press_rub} className={this.props.curValuta === 1 ? s.btn_selected : ''}>RUB</button>
-                    <button onClick={this.press_usd} className={this.props.curValuta === 2 ? s.btn_selected : ''}>USD</button>
-                    <button onClick={this.press_eur} className={this.props.curValuta === 3 ? s.btn_selected : ''}>EUR</button>
+                    <button onClick={this.press_rub} className={curValuta === 1 ? s.btn_selected : ''}>RUB</button>
+                    <button onClick={this.press_usd} className={curValuta === 2 ? s.btn_selected : ''}>USD</button>
+                    <button onClick={this.press_eur} className={curValuta === 3 ? s.btn_selected : ''}>EUR</button>
                 </div>
                 <div className={s.peresad}>
-                    <div><input type='checkbox' checked={this.props.condition.chk_all} onChange={this.setChkAll} /><label>Все</label></div>
-                    <div><input type='checkbox' checked={this.props.condition.chk_withOutTr} onChange={this.setChkWithOutTr} /><label>Без пересадки</label></div>
-                    <div><input type='checkbox' checked={this.props.condition.chk_1tr} onChange={this.setChk1Tr} /><label>1 пересадки</label></div>
-                    <div><input type='checkbox' checked={this.props.condition.chk_2tr} onChange={this.setChk2Tr} /><label>2 пересадки</label></div>
-                    <div><input type='checkbox' checked={this.props.condition.chk_3tr} onChange={this.setChk3Tr} /><label>3 пересадки</label></div>
+                    <div>
+                        <input type='checkbox' checked={condition.chk_all} onChange={this.setChkAll} />Все
+                    </div>
+                    <div>
+                        <input type='checkbox' checked={condition.chk_withOutTr} onChange={this.setChkWithOutTr} />Без пересадки
+                    </div>
+                    <div>
+                        <input type='checkbox' checked={condition.chk_1tr} onChange={this.setChk1Tr} />1 пересадки
+                    </div>
+                    <div>
+                        <input type='checkbox' checked={condition.chk_2tr} onChange={this.setChk2Tr} />2 пересадки
+                    </div>
+                    <div>
+                        <input type='checkbox' checked={condition.chk_3tr} onChange={this.setChk3Tr} />3 пересадки
+                    </div>
                 </div>
-
             </div>
         )
     }

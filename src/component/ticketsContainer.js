@@ -2,25 +2,27 @@ import ListTickets from './ListTickets'
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { changeCurrency, changeSortDirection } from '../redux/dataAction';
-import { setFilter, loadTicketsAndAplyFilter} from '../redux/processingTicketsData'
+import { setFilter, loadTicketsAndAplyFilter } from '../redux/processingTicketsData'
 
 class TicketsContainerAPI extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.changeCurrency     = this.props.changeCurrency.bind(this);
-        this.setFilter          = this.props.setFilter.bind(this);
-        this.changeSortDirection= this.props.changeSortDirection.bind(this)
+        let { changeCurrency, setFilter, changeSortDirection } = this.props;
+        this.changeCurrency = changeCurrency.bind(this);
+        this.setFilter = setFilter.bind(this);
+        this.changeSortDirection = changeSortDirection.bind(this);
     }
 
-    changeCurrency(){}    
-    setFilter(){}
-    changeSortDirection(){}
+    changeCurrency() { }
+    setFilter() { }
+    changeSortDirection() { }
 
-    componentDidMount() {this.props.loadTicketsAndAplyFilter()}
+    componentDidMount() { this.props.loadTicketsAndAplyFilter() }
 
     render() {
-        return (<ListTickets ticketsData={this.props.TicketsData}
-            curValuta={this.props.TicketsData.curValuta}
+        let { TicketsData } = this.props;
+        return (<ListTickets ticketsData={TicketsData}
+            curValuta={TicketsData.curValuta}
             changeCurrency={this.changeCurrency}
             changeSortDirection={this.changeSortDirection}
             setFilter={this.setFilter}
@@ -34,6 +36,12 @@ const mapStateToProps = (state) => {
     }
 }
 
-let TicketsContainer = connect(mapStateToProps, { changeSortDirection, changeCurrency, loadTicketsAndAplyFilter, setFilter})(TicketsContainerAPI);
+let TicketsContainer = connect(
+    mapStateToProps,
+    {
+        changeSortDirection, changeCurrency,
+        loadTicketsAndAplyFilter, setFilter
+    }
+)(TicketsContainerAPI);
 
 export default TicketsContainer;

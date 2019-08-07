@@ -1,4 +1,4 @@
-import { SET_CHK_ALL, SET_CHK_WITH_OUT_TR, SET_CHK_1TR, SET_CHK_2TR, SET_CHK_3TR } from '../data/const'
+import { SET_CHK_ALL, SET_CHK_WITH_OUT_TR, SET_CHK_1TR, SET_CHK_2TR, SET_CHK_3TR } from './const'
 import { setChkAll, setChkWithOutTr, setChk1Tr, setChk2Tr, setChk3Tr, clearTicketsArray, addTicketsToArray } from './dataAction'
 import { setFetching } from './dataAction'
 import serverAPI from '../api/dataAPI'
@@ -57,14 +57,14 @@ const reciveStreamTickets = (searchId, dispatch, condition) => {
             } if (respons.data.stop === false) {
                 dispatch(
                     addTicketsToArray(
-                        ApplyFilterToArray(
+                        applyFilterToArray(
                             convertDataFromApiv2(respons.data.tickets), condition)));
-                reciveStreamTickets(searchId, dispatch, condition)
-                //dispatch(setFetching(false));
+                //reciveStreamTickets(searchId, dispatch, condition)
+                dispatch(setFetching(false));
             } if (respons.data.stop === true) {
                 dispatch(
                     addTicketsToArray(
-                        ApplyFilterToArray(
+                        applyFilterToArray(
                             convertDataFromApiv2(respons.data.tickets), condition)));
                 dispatch(setFetching(false));
             }
@@ -72,7 +72,7 @@ const reciveStreamTickets = (searchId, dispatch, condition) => {
     )
 }
 
-const ApplyFilterToArray = (tickets, condition) => {
+const applyFilterToArray = (tickets, condition) => {
     let filteredTickets = tickets.filter((ticket) => {
         if (condition.chk_all === true) {
             return true

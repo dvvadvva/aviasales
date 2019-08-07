@@ -1,5 +1,5 @@
-import {CHG_VALUTA, SET_CHK_ALL, SET_CHK_WITH_OUT_TR, SET_CHK_1TR, SET_CHK_2TR, SET_CHK_3TR, LOAD_TICKETS, CLEAR_TICKETS} from '../data/const'
-import {SET_FETCHING, ADD_TICKETS, SET_DIRECTION_SORT} from '../data/const'
+import {CHG_VALUTA, SET_CHK_ALL, SET_CHK_WITH_OUT_TR, SET_CHK_1TR, SET_CHK_2TR, SET_CHK_3TR, LOAD_TICKETS, CLEAR_TICKETS} from './const'
+import {SET_FETCHING, ADD_TICKETS, SET_DIRECTION_SORT} from './const'
 
 export const changeCurrency = (num) => ({ type: CHG_VALUTA, num: num })
 export const setChkAll = () => ({ type: SET_CHK_ALL })

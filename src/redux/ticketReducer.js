@@ -1,5 +1,5 @@
-import { CHG_VALUTA, LOAD_TICKETS, SET_CHK_ALL, SET_CHK_WITH_OUT_TR, SET_CHK_1TR, SET_CHK_2TR, SET_CHK_3TR, CLEAR_TICKETS, ADD_TICKETS, SORT_BY_LOW_COST, SET_DIRECTION_SORT } from '../data/const'
-import { SET_FETCHING } from '../data/const'
+import { CHG_VALUTA, LOAD_TICKETS, SET_CHK_ALL, SET_CHK_WITH_OUT_TR, SET_CHK_1TR, SET_CHK_2TR, SET_CHK_3TR, CLEAR_TICKETS } from './const'
+import { ADD_TICKETS, SORT_BY_LOW_COST, SET_DIRECTION_SORT, SET_FETCHING } from './const'
 import { sortTickets, sortTicketsByDuration } from './processingTicketsData'
 
 const initialState = {
