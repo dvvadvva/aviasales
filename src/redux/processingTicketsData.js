@@ -1,6 +1,7 @@
 import { SET_CHK_ALL, SET_CHK_WITH_OUT_TR, SET_CHK_1TR, SET_CHK_2TR, SET_CHK_3TR } from './const'
-import { setChkAll, setChkWithOutTr, setChk1Tr, setChk2Tr, setChk3Tr, clearTicketsArray, addTicketsToArray } from './dataAction'
-import { setFetching } from './dataAction'
+import { setChkAll, setChkWithOutTr, setChk1Tr, setChk2Tr, setChk3Tr, clearTicketsArray} from './dataAction'
+import { addTicketsToArray } from './dataAction'
+import { setFetching, onChangeSortDirection } from './dataAction'
 import serverAPI from '../api/dataAPI'
 
 export const sortTickets = (tiketsCurrent, ticketsNext) => {
@@ -59,9 +60,12 @@ const reciveStreamTickets = (searchId, dispatch, condition) => {
                     addTicketsToArray(
                         applyFilterToArray(
                             convertDataFromApiv2(respons.data.tickets), condition)));
-                // <<Только дя теста
+                // <<Только дя теста, в рабочей версии обратить комментарий
+
                 //reciveStreamTickets(searchId, dispatch, condition)
                 dispatch(setFetching(false));
+                dispatch(onChangeSortDirection());
+                
                 // Только дя теста >>
              } if (respons.data.stop === true) {
                 dispatch(
@@ -69,6 +73,7 @@ const reciveStreamTickets = (searchId, dispatch, condition) => {
                         applyFilterToArray(
                             convertDataFromApiv2(respons.data.tickets), condition)));
                 dispatch(setFetching(false));
+                dispatch(onChangeSortDirection());
             }
         }
     )

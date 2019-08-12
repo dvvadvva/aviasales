@@ -17,7 +17,9 @@ class TicketsContainerAPI extends Component {
     setFilter() { }
     onChangeSortDirection() { }
 
-    componentDidMount() { this.props.loadTicketsAndAplyFilter() }
+    componentDidMount() { 
+        this.props.loadTicketsAndAplyFilter();
+    }
 
     render() {
         let { TicketsData, sortData } = this.props;
