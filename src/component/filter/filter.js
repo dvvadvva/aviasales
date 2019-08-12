@@ -7,11 +7,11 @@ class Filter extends Component {
     press_rub = () => { this.props.changeCurrency(1); }
     press_usd = () => { this.props.changeCurrency(2); }
     press_eur = () => { this.props.changeCurrency(3); }
-    setChkAll = () => { this.props.setFilter(SET_CHK_ALL) }
-    setChkWithOutTr = () => { this.props.setFilter(SET_CHK_WITH_OUT_TR) }
-    setChk1Tr = () => { this.props.setFilter(SET_CHK_1TR) }
-    setChk2Tr = () => { this.props.setFilter(SET_CHK_2TR) }
-    setChk3Tr = () => { this.props.setFilter(SET_CHK_3TR) }
+    setChkAll = () => { this.props.onChangeFilterValue(SET_CHK_ALL) }
+    setChkWithOutTr = () => { this.props.onChangeFilterValue(SET_CHK_WITH_OUT_TR) }
+    setChk1Tr = () => { this.props.onChangeFilterValue(SET_CHK_1TR) }
+    setChk2Tr = () => { this.props.onChangeFilterValue(SET_CHK_2TR) }
+    setChk3Tr = () => { this.props.onChangeFilterValue(SET_CHK_3TR) }
 
     render() {
         let { curValuta, condition } = this.props;

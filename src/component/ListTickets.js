@@ -30,7 +30,7 @@ class ListTickets extends Component {
     }
 
     render() {
-        let {ticketsData, curValuta, changeCurrency, setFilter, onChangeSortDirection}=this.props;
+        let {ticketsData, curValuta, changeCurrency, onChangeFilterValue, onChangeSortDirection, condition}=this.props;
         return <div className={s.App}>
             <div className={s.header}>
                 <img src={logo} alt="logo" />
@@ -38,10 +38,10 @@ class ListTickets extends Component {
             </div>
             <div className={s.filter}>
                 <Filter
-                    condition={ticketsData.condition}
+                    condition={condition}
                     curValuta={curValuta}
                     changeCurrency={changeCurrency}
-                    setFilter={setFilter} />
+                    onChangeFilterValue={onChangeFilterValue} />
             </div>
             <div>
                 <SortTickets

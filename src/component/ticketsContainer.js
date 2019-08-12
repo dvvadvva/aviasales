@@ -1,20 +1,20 @@
 import ListTickets from './ListTickets'
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { changeCurrency, onChangeSortDirection } from '../redux/dataAction';
-import { setFilter, loadTicketsAndAplyFilter } from '../redux/processingTicketsData'
+import { onChangeFilterValue, changeCurrency, onChangeSortDirection } from '../redux/dataAction';
+import { loadTicketsAndAplyFilter } from '../redux/dataAction'
 
 class TicketsContainerAPI extends Component {
     constructor(props) {
         super(props);
-        let { changeCurrency, setFilter, onChangeSortDirection } = this.props;
+        let { changeCurrency, onChangeFilterValue, onChangeSortDirection } = this.props;
         this.changeCurrency = changeCurrency.bind(this);
-        this.setFilter = setFilter.bind(this);
+        this.onChangeFilterValue = onChangeFilterValue.bind(this);
         this.onChangeSortDirection = onChangeSortDirection.bind(this);
     }
 
     changeCurrency() { }
-    setFilter() { }
+    onChangeFilterValue() { }
     onChangeSortDirection() { }
 
     componentDidMount() { 
@@ -22,15 +22,16 @@ class TicketsContainerAPI extends Component {
     }
 
     render() {
-        let { TicketsData, sortData } = this.props;
+        let { TicketsData, sortData, condition } = this.props;
         return (<ListTickets 
             ticketsData={TicketsData}
             curValuta={TicketsData.curValuta}
             sortType= {sortData.sortType}
+            condition={condition}
             
             changeCurrency={this.changeCurrency}
             onChangeSortDirection={this.onChangeSortDirection}
-            setFilter={this.setFilter}    
+            onChangeFilterValue={this.onChangeFilterValue}    
         />)
     }
 }
@@ -38,7 +39,8 @@ class TicketsContainerAPI extends Component {
 const mapStateToProps = (state) => {
     return {
         TicketsData: state.ticketData,
-        sortData: state.sortData
+        sortData: state.sortData,
+        condition: state.condition
     }
 }
 
@@ -46,7 +48,9 @@ let TicketsContainer = connect(
     mapStateToProps,
     {
         changeCurrency,
-        loadTicketsAndAplyFilter, setFilter, onChangeSortDirection
+        loadTicketsAndAplyFilter, 
+        onChangeFilterValue, 
+        onChangeSortDirection
     }
 )(TicketsContainerAPI);
 
