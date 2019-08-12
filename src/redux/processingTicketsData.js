@@ -59,9 +59,11 @@ const reciveStreamTickets = (searchId, dispatch, condition) => {
                     addTicketsToArray(
                         applyFilterToArray(
                             convertDataFromApiv2(respons.data.tickets), condition)));
+                // <<Только дя теста
                 //reciveStreamTickets(searchId, dispatch, condition)
                 dispatch(setFetching(false));
-            } if (respons.data.stop === true) {
+                // Только дя теста >>
+             } if (respons.data.stop === true) {
                 dispatch(
                     addTicketsToArray(
                         applyFilterToArray(

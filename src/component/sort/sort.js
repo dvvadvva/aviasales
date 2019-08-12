@@ -6,14 +6,14 @@ class SortTickets extends Component {
     constructor(props) {
         super(props);
         this.choiseSortByCost = this.choiseSortByCost.bind(this);
-        this.choiseSortByDuration = this.choiseSortByDuration.bind(this);
+        this.choiseSortByDuration = this.choiseSortByDuration.bind(this);        
     }
     choiseSortByCost() {
-        this.props.changeSortDirection(SORT_BY_LOW_COST);
+        this.props.onChangeSortDirection(SORT_BY_LOW_COST);
     }
 
     choiseSortByDuration() {
-        this.props.changeSortDirection(SORT_BY_FASTEN);
+        this.props.onChangeSortDirection(SORT_BY_FASTEN);    
     }
 
     render() {
